@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import ExerciseList from './components/ExerciseList';
-import CreateExercise from './components/CreateExercise';
-import { getAllExercises, selectExercises, selectLoadingExercises } from './ducks';
+import ExerciseList from "./components/ExerciseList";
+import CreateExercise from "./components/CreateExercise";
+import {
+  getAllExercises,
+  selectExercises,
+  selectLoadingExercises,
+  selectErrorLoadingExercises
+} from "./ducks";
 
 function ExerciseExplorer() {
   const dispatch = useDispatch();
@@ -17,15 +22,20 @@ function ExerciseExplorer() {
   }, []);
 
   const exercises = useSelector(selectExercises);
-  const loading = useSelector(selectLoadingExercises);
+  const loadingExercises = useSelector(selectLoadingExercises);
+  const errorLoadingExercises = useSelector(selectErrorLoadingExercises);
 
   return (
     <div className="exercise-explorer">
       ExerciseExplorer
-      <ExerciseList exercises={exercises} loading={loading} />
-      <CreateExercise/>
+      <ExerciseList
+        exercises={exercises}
+        loading={loadingExercises}
+        error={errorLoadingExercises}
+      />
+      <CreateExercise />
     </div>
-  )
+  );
 }
 
 export default ExerciseExplorer;

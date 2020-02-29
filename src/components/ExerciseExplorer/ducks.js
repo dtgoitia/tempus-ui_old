@@ -1,6 +1,9 @@
+// TODO: add absolute path to this file
+import client from './../../createClient';
+import getAllExercisesQuery from './graphql/getAllExercises';
+
 // Actions
 const CREATE_EXERCISE = 'CREATE_EXERCISE';
-const GET_ALL_EXERCISES = 'GET_ALL_EXERCISES';
 const LOADING_ALL_EXERCISES = 'LOADING_ALL_EXERCISES';
 const LOADING_ALL_EXERCISES_SUCCESS = 'LOADING_ALL_EXERCISES_SUCCESS';
 const LOADING_ALL_EXERCISES_FAIL = 'LOADING_ALL_EXERCISES_FAIL';
@@ -17,6 +20,8 @@ export default function exerciseExplorerReducer(
       return loadingAllExercisesReducer(state);
     case LOADING_ALL_EXERCISES_SUCCESS:
       return loadingAllExercisesSuccessReducer(state, action);
+    case LOADING_ALL_EXERCISES_FAIL:
+      return loadingAllExercisesFailReducer(state, action);
     case CREATE_EXERCISE:
       return createExerciseReducer(state, action);
     case DELETE_EXERCISE:
@@ -27,22 +32,26 @@ export default function exerciseExplorerReducer(
 }
 
 function loadingAllExercisesReducer(state) {
-  return {
-    ...state,
+  return { ...state,
     loading: true,
-    exercises: []
+    exercises: [],
+    error: null,
   };
 }
+
 function loadingAllExercisesSuccessReducer(state, action) {
-  // TODO: the 'exercises' variable should get its value from action
-  const exercises = [
-    { id: 0, name: 'Exercise 1', description: 'description 1', exerciseType: 'PREP' },
-    { id: 1, name: 'Exercise 2', description: 'description 2', exerciseType: 'WORK' },
-  ];
-  return {
-    ...state,
+  return { ...state,
     loading: false,
-    exercises,
+    exercises: action.exercises,
+    error: null,
+  };
+}
+
+function loadingAllExercisesFailReducer(state, action) {
+  const { type , ...actionProps } = action;
+  return { ...state, 
+    loading: false,
+    ...actionProps,
   };
 }
 
@@ -69,20 +78,37 @@ function deleteExerciseReducer(state, action) {
 
 // Action creators
 export function getAllExercises() {
-  // return { type: GET_ALL_EXERCISES };
   return function(dispatch) {
+    // TODO: add logging
     dispatch(loadingAllExercises());
-    // TODO: replace timeout for network request
-    return setTimeout(() => {
-      dispatch(loadingAllExercisesSuccess())
-    }, 1000); ;
+    return client
+      .query({ query: getAllExercisesQuery })
+      .then(result => {
+        // TODO: add logging
+        dispatch(loadingAllExercisesSuccess(result.data));
+      })
+      .catch(reason => {
+        // TODO: add logging
+        dispatch(loadingAllExercisesFail(reason));
+      })
   }
 }
 export function loadingAllExercises() {
   return { type: LOADING_ALL_EXERCISES };
 }
-export function loadingAllExercisesSuccess() {
-  return { type: LOADING_ALL_EXERCISES_SUCCESS };
+export function loadingAllExercisesSuccess(response) {
+  return {
+    type: LOADING_ALL_EXERCISES_SUCCESS,
+    exercises: response.exercises,
+    getExercisesError: null,
+  };
+}
+export function loadingAllExercisesFail(errorResponse) {
+  return {
+    type: LOADING_ALL_EXERCISES_FAIL,
+    exercises: null,
+    getExercisesError: errorResponse.message,
+  };
 }
 export function createExercise({ id, name, description, exerciseType }) {
   return { type: CREATE_EXERCISE, id, name, description, exerciseType }
@@ -94,3 +120,5 @@ export function deleteExercise({ id }) {
 // Selector
 export const selectExercises = state => state.exerciseExplorer.exercises;
 export const selectLoadingExercises = state => state.exerciseExplorer.loading;
+export const selectErrorLoadingExercises = state => state.exerciseExplorer.getExercisesError;
+// export const selectErrorCreatingExercise = state => state.exerciseExplorer.createExerciseError;
