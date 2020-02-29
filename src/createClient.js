@@ -15,7 +15,7 @@ const defaultOptions = {
   },
 }
 
-export default function createApolloClient() {
+export function createApolloClient() {
   const httpLink = createHttpLink({
     uri: API_ENDPOINT,
     credentials: 'include'
@@ -27,3 +27,7 @@ export default function createApolloClient() {
     defaultOptions: defaultOptions,
   })
 }
+
+const client = createApolloClient();
+
+export default client;
