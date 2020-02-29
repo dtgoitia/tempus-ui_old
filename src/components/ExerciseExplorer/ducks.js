@@ -1,16 +1,11 @@
 // Actions
 const CREATE_EXERCISE = 'CREATE_EXERCISE';
 const GET_ALL_EXERCISES = 'GET_ALL_EXERCISES';
+const LOADING_ALL_EXERCISES = 'LOADING_ALL_EXERCISES';
+const LOADING_ALL_EXERCISES_SUCCESS = 'LOADING_ALL_EXERCISES_SUCCESS';
+const LOADING_ALL_EXERCISES_FAIL = 'LOADING_ALL_EXERCISES_FAIL';
 const DELETE_EXERCISE = 'DELETE_EXERCISE';
 // const DISCARD_EXERCISE = 'DISCARD_EXERCISE';
-
-// Initial states
-export const exerciseExplorerInitialState = {
-  exercises: [
-    { id: 0, name: 'blah0', description: 'description 0', exerciseType: 'WORK' },
-    { id: 1, name: 'blah1', description: 'description 1', exerciseType: 'WORK' },
-  ]
-};
 
 // Reducers
 export default function exerciseExplorerReducer(
@@ -18,8 +13,10 @@ export default function exerciseExplorerReducer(
   action = {}
 ) {
   switch (action.type) {
-    case GET_ALL_EXERCISES:
-      return getAllExercisesReducer(state);
+    case LOADING_ALL_EXERCISES:
+      return loadingAllExercisesReducer(state);
+    case LOADING_ALL_EXERCISES_SUCCESS:
+      return loadingAllExercisesSuccessReducer(state, action);
     case CREATE_EXERCISE:
       return createExerciseReducer(state, action);
     case DELETE_EXERCISE:
@@ -29,17 +26,22 @@ export default function exerciseExplorerReducer(
   }
 }
 
-function getAllExercisesReducer(state) {
-  // TODO: dispatch LOADING action
-  // TODO: dispatch COMPLETE/ERROR action
+function loadingAllExercisesReducer(state) {
+  return {
+    ...state,
+    loading: true,
+    exercises: []
+  };
+}
+function loadingAllExercisesSuccessReducer(state, action) {
+  // TODO: the 'exercises' variable should get its value from action
   const exercises = [
     { id: 0, name: 'Exercise 1', description: 'description 1', exerciseType: 'PREP' },
     { id: 1, name: 'Exercise 2', description: 'description 2', exerciseType: 'WORK' },
   ];
-  // TODO: validate received data
   return {
     ...state,
-    loading: true,
+    loading: false,
     exercises,
   };
 }
@@ -67,7 +69,20 @@ function deleteExerciseReducer(state, action) {
 
 // Action creators
 export function getAllExercises() {
-  return { type: GET_ALL_EXERCISES };
+  // return { type: GET_ALL_EXERCISES };
+  return function(dispatch) {
+    dispatch(loadingAllExercises());
+    // TODO: replace timeout for network request
+    return setTimeout(() => {
+      dispatch(loadingAllExercisesSuccess())
+    }, 1000); ;
+  }
+}
+export function loadingAllExercises() {
+  return { type: LOADING_ALL_EXERCISES };
+}
+export function loadingAllExercisesSuccess() {
+  return { type: LOADING_ALL_EXERCISES_SUCCESS };
 }
 export function createExercise({ id, name, description, exerciseType }) {
   return { type: CREATE_EXERCISE, id, name, description, exerciseType }
