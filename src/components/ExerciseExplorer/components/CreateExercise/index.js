@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import { createExercise } from "./../../ducks";
 
-const EMPTY_STRING = '';
+const EMPTY_STRING = "";
+const NAME = 'name';
+const DESCRIPTION = 'description';
+const EXERCISE_TYPE = 'exercise-type';
+
+const Container = styled.div`
+  margin: 2rem;
+`;
+
+const BlockInput = styled.input`
+  display: block;
+  width: 100%;
+`;
 
 function CreateExercise() {
   const dispatch = useDispatch();
@@ -13,21 +26,25 @@ function CreateExercise() {
   const [exerciseType, setExerciseType] = useState(EMPTY_STRING);
 
   return (
-    <div className="create-exercise">
-      CreateExercise
-      <input
+    <Container className="create-exercise">
+      <div>CreateExercise</div>
+      <label for={NAME}>Exercise name:*</label>
+      <BlockInput
         type="text"
-        id="name"
+        id={NAME}
         value={name}
+        placeholder="One leg squat"
         onChange={e => setName(e.target.value)}
       />
-      <input
+      <label for={DESCRIPTION}>Exercise description:</label>
+      <BlockInput
         type="text"
-        id="description"
+        id={DESCRIPTION}
         value={description}
+        placeholder="Keep the legs open to the width of your shoulders..."
         onChange={e => setDescription(e.target.value)}
       />
-      <input
+      <BlockInput
         type="text"
         id="exercise-type"
         value={exerciseType}
@@ -35,14 +52,22 @@ function CreateExercise() {
       />
       <button
         className="create-exercise-button"
-        onClick={() => dispatch(createExercise({
-          id: Date.now(),
-          name, description, exerciseType
-        }))}
-      >CREATE</button>
+        onClick={() =>
+          dispatch(
+            createExercise({
+              id: Date.now(),
+              name,
+              description,
+              exerciseType
+            })
+          )
+        }
+      >
+        CREATE
+      </button>
       <button>DISCARD</button>
-    </div>
-  )
+    </Container>
+  );
 }
 
 export default CreateExercise;

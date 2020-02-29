@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import ExerciseList from "./components/ExerciseList";
 import CreateExercise from "./components/CreateExercise";
@@ -9,6 +10,11 @@ import {
   selectLoadingExercises,
   selectErrorLoadingExercises
 } from "./ducks";
+
+
+const Container = styled.div`
+  margin: 2rem;
+`;
 
 function ExerciseExplorer() {
   const dispatch = useDispatch();
@@ -26,7 +32,7 @@ function ExerciseExplorer() {
   const errorLoadingExercises = useSelector(selectErrorLoadingExercises);
 
   return (
-    <div className="exercise-explorer">
+    <Container className="exercise-explorer">
       ExerciseExplorer
       <ExerciseList
         exercises={exercises}
@@ -34,7 +40,7 @@ function ExerciseExplorer() {
         error={errorLoadingExercises}
       />
       <CreateExercise />
-    </div>
+    </Container>
   );
 }
 

@@ -1,26 +1,37 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
 
 // TODO: set up Webpack to use '@' instead of long relative paths
 import { deleteExercise } from "./../../ducks";
 
-function ExerciseListItem({ exercise: { id, name, description, exerciseType }}) {
+const Container = styled.div({
+  borderTop: "1px solid black",
+  margin: "0 auto",
+});
+const Name = styled.h3({
+  color: 'blue',
+});
+const Description = styled.p``;
+
+function ExerciseListItem({
+  exercise: { id, name, description, exerciseType }
+}) {
   const dispatch = useDispatch();
 
   return (
-    <div className="exercise-list-item">
-      ExerciseListItem 
-      <p>name: {name}</p>
-      <p>description: {description}</p>
+    <Container className="exercise-list-item">
+      <Name>{name}</Name>
+      <Description>{description}</Description>
       <p>type: {exerciseType}</p>
       <button
         className="create-exercise-button"
-        onClick={() => dispatch(deleteExercise({id}))}
+        onClick={() => dispatch(deleteExercise({ id }))}
       >
         DELETE EXERCISE
       </button>
-    </div>
-  )
+    </Container>
+  );
 }
 
 export default ExerciseListItem;
