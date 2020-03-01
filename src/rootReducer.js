@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import exerciseExplorerReducer from './components/ExerciseExplorer/ducks';
+import exerciseExplorerReducer from './ducks';
 
 const rootReducer = combineReducers({
   // counter: counterReducer,

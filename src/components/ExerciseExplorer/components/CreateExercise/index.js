@@ -6,7 +6,8 @@ import {
   createExercise,
   selectCreatingExercise,
   selectErrorCreatingExercise,
-} from "../../ducks/createExercise";
+} from "../../../../ducks/createExercise";
+// TODO: configure webpack to provide absolute path access to 'ducks'
 
 const EMPTY_STRING = "";
 const EMPTY_FORM = {

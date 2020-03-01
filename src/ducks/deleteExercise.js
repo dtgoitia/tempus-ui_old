@@ -1,4 +1,4 @@
-import client from "../../../createClient";
+import client from "../createClient";
 import DELETE_EXERCISE_MUTATION from "../graphql/deleteExercise";
 
 // Actions

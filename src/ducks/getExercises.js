@@ -1,6 +1,6 @@
-import client from '../../../createClient';
+import client from '../createClient';
 import GET_EXERCISES_QUERY from '../graphql/getExercises';
-import { dropTypename } from '../../../utils';
+import { dropTypename } from '../utils';
 
 // Actions
 const LOADING_EXERCISES = 'LOADING_EXERCISES';

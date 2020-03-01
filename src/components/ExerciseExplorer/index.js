@@ -9,7 +9,8 @@ import {
   selectExercises,
   selectLoadingExercises,
   selectErrorLoadingExercises,
-} from "./ducks/getExercises";
+} from "../../ducks/getExercises";
+// TODO: configure webpack to provide absolute path access to 'ducks'
 
 
 const Container = styled.div`

@@ -5,8 +5,8 @@ import styled from "styled-components";
 import {
   deleteExercise,
   selectDeletingExercise,
-  selectErrorDeletingExercise
-} from "../../ducks/deleteExercise";
+} from "../../../../ducks/deleteExercise";
+// TODO: configure webpack to provide absolute path access to 'ducks'
 
 const Container = styled.div({
   borderTop: "1px solid black",

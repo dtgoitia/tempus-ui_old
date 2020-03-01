@@ -1,5 +1,5 @@
-import client from '../../../createClient';
-import { dropTypename } from '../../../utils';
+import client from '../createClient';
+import { dropTypename } from '../utils';
 import CREATE_EXERCISE_MUTATION from '../graphql/createExercise'
 
 // Actions
