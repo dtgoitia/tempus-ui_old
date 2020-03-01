@@ -5,11 +5,11 @@ import styled from "styled-components";
 import ExerciseList from "./components/ExerciseList";
 import CreateExercise from "./components/CreateExercise";
 import {
-  getAllExercises,
+  getExercises,
   selectExercises,
   selectLoadingExercises,
-  selectErrorLoadingExercises
-} from "./ducks";
+  selectErrorLoadingExercises,
+} from "./ducks/getExercises";
 
 
 const Container = styled.div`
@@ -21,10 +21,10 @@ function ExerciseExplorer() {
 
   // Fire the callback only:
   // useEffect: fire after the component is mounted and rendered
-  // once: the second argument (see docs below)
+  // once: the second argument in useEffect (see docs below)
   // docs: https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
   useEffect(() => {
-    dispatch(getAllExercises());
+    dispatch(getExercises());
   }, []);
 
   const exercises = useSelector(selectExercises);

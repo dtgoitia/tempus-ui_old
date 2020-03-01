@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-const getAllExercisesQuery = gql`
+const GET_EXERCISES_QUERY = gql`
   {
     exercises {
       id
@@ -11,4 +11,4 @@ const getAllExercisesQuery = gql`
   }
 `;
 
-export default getAllExercisesQuery;
+export default GET_EXERCISES_QUERY;
