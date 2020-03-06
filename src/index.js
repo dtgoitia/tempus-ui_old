@@ -10,6 +10,7 @@ import store from "./store";
 import UrlNotFound from "./scenes/404";
 import ExerciseExplorerScene from "./scenes/exerciseExplorer";
 import PlanExplorerScene from "./scenes/planExplorer";
+import PlanEditorScene from "./scenes/planEditor";
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -18,6 +19,7 @@ const Root = ({ store }) => (
         <Route exact path="/" component={PlanExplorerScene} />
         <Route exact path="/exercises" component={ExerciseExplorerScene} />
         <Route exact path="/plans" component={PlanExplorerScene} />
+        <Route exact path="/plans/:planId" component={PlanEditorScene} />
         <Route path="*" component={UrlNotFound} />
       </Switch>
     </Router>
