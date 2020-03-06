@@ -9,13 +9,15 @@ import * as serviceWorker from "./serviceWorker";
 import store from "./store";
 import UrlNotFound from "./scenes/404";
 import ExerciseExplorerScene from "./scenes/exerciseExplorer";
+import PlanExplorerScene from "./scenes/planExplorer";
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/" component={ExerciseExplorerScene} />
+        <Route exact path="/" component={PlanExplorerScene} />
         <Route exact path="/exercises" component={ExerciseExplorerScene} />
+        <Route exact path="/plans" component={PlanExplorerScene} />
         <Route path="*" component={UrlNotFound} />
       </Switch>
     </Router>
