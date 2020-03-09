@@ -4,7 +4,7 @@ import { isDeleteExerciseAction, deleteExerciseRootReducer } from './deleteExerc
 import { getPlansRootReducer, isGetPlansAction } from './getPlans';
 
 // Reducers
-export default function exerciseExplorerReducer(state = [], action = {}) {
+export function exerciseExplorerReducer(state = [], action = {}) {
   switch (true) {
     case isCreateExerciseAction(action):
       return createExerciseRootReducer(state, action);
@@ -12,6 +12,13 @@ export default function exerciseExplorerReducer(state = [], action = {}) {
       return getExercisesRootReducer(state, action);
     case isDeleteExerciseAction(action):
       return deleteExerciseRootReducer(state, action);
+    default:
+      return state;
+  }
+}
+
+export function planExplorerReducer(state = [], action = {}) {
+  switch (true) {
     case isGetPlansAction(action):
       return getPlansRootReducer(state, action);
     default:
