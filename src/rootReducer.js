@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 
-import exerciseExplorerReducer from './ducks';
-import planExplorerReducer from './ducks';
+import { exerciseExplorerReducer } from './ducks';
+import { planExplorerReducer } from './ducks';
+import { planEditorReducer } from './ducks';
 
 const rootReducer = combineReducers({
-  // counter: counterReducer,
   exerciseExplorer: exerciseExplorerReducer,
   planExplorer: planExplorerReducer,
+  planEditor: planEditorReducer,
 });
 
 export default rootReducer;

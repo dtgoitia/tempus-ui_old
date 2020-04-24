@@ -2,6 +2,7 @@ import { createExerciseRootReducer, isCreateExerciseAction } from './createExerc
 import { getExercisesRootReducer, isGetExercisesAction } from './getExercises';
 import { isDeleteExerciseAction, deleteExerciseRootReducer } from './deleteExercise';
 import { getPlansRootReducer, isGetPlansAction } from './getPlans';
+import { getPlanRootReducer, isGetPlanAction } from './getPlan';
 
 // Reducers
 export function exerciseExplorerReducer(state = [], action = {}) {
@@ -21,6 +22,15 @@ export function planExplorerReducer(state = [], action = {}) {
   switch (true) {
     case isGetPlansAction(action):
       return getPlansRootReducer(state, action);
+    default:
+      return state;
+  }
+}
+
+export function planEditorReducer(state = [], action = {}) {
+  switch (true) {
+    case isGetPlanAction(action):
+      return getPlanRootReducer(state, action);
     default:
       return state;
   }
