@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -11,17 +11,13 @@ import {
 export default function PlanExplorer() {
   const dispatch = useDispatch();
 
-  // Fire the callback only:
-  // useEffect: fire after the component is mounted and rendered
-  // once: the second argument in useEffect (see docs below)
-  // docs: https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
-  useEffect(() => {
-    dispatch(getPlans());
-  }, []);
-
   const plans = useSelector(selectPlans);
   const loadingPlans = useSelector(selectLoadingPlans);
   const errorLoadingPlans = useSelector(selectErrorLoadingPlans);
+
+  if(!plans && !loadingPlans) {
+    dispatch(getPlans());
+  }
 
   return (
     <div>

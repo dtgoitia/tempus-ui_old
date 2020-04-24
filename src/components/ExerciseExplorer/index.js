@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -20,17 +20,13 @@ const Container = styled.div`
 function ExerciseExplorer() {
   const dispatch = useDispatch();
 
-  // Fire the callback only:
-  // useEffect: fire after the component is mounted and rendered
-  // once: the second argument in useEffect (see docs below)
-  // docs: https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
-  useEffect(() => {
-    dispatch(getExercises());
-  }, []);
-
   const exercises = useSelector(selectExercises);
   const loadingExercises = useSelector(selectLoadingExercises);
   const errorLoadingExercises = useSelector(selectErrorLoadingExercises);
+
+  if (!exercises && !loadingExercises) {
+    dispatch(getExercises());
+  }
 
   return (
     <Container className="exercise-explorer">
